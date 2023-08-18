@@ -12,7 +12,7 @@ This is a a pet shop api to show my students from [Cubos Academy](https://cubos.
 
 To run this project locally, you need to:
 
-- Install dependencies for both backend and frontend
+- Install dependencies
 
 ```shell
 npm install
