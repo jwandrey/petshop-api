@@ -1,12 +1,16 @@
-const database = require("../database");
-let id = 1;
+const pool = require("../database");
 
-const create = (request, response) => {
+const create = async (request, response) => {
   try {
-    const { name, email, password, endereco } = request.body;
-    const newClient = { id, name, email, password, endereco };
-    database.clients.push(newClient);
-    id++;
+    const { name, email, password, address } = request.body;
+
+    const query =
+      "INSERT INTO users (name, email, password, address) VALUES ($1, $2, $3, $4);";
+
+    const values = [name, email, password, address];
+
+    const queryResult = await pool.query(query, values);
+
     return response
       .status(201)
       .send({ message: "Client created successfully" });
