@@ -1,13 +1,16 @@
 const pool = require("../database");
+const bcrypt = require("bcrypt");
 
 const create = async (request, response) => {
   try {
     const { name, email, password, address } = request.body;
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const query =
       "INSERT INTO users (name, email, password, address) VALUES ($1, $2, $3, $4);";
 
-    const values = [name, email, password, address];
+    const values = [name, email, hashedPassword, address];
 
     const queryResult = await pool.query(query, values);
 
