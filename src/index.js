@@ -17,6 +17,11 @@ app.get("/user/:id", clientsController.readById);
 app.put("/user/:id", clientsController.update);
 app.delete("/user/:id", clientsController.remove);
 
+/**
+ * * Login routes
+ */
+app.post("/login", clientsController.login);
+
 app.listen(port, () => {
   console.log(`Server is running on: http://localhost:${port}`);
 });
