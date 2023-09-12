@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const clientsController = require("./controllers/clientsController");
+
+const clientsController = require("./controllers/clients");
+const authController = require("./controllers/auth");
 
 const app = express();
 const port = 3333;
@@ -20,7 +22,7 @@ app.delete("/user/:id", clientsController.remove);
 /**
  * * Login routes
  */
-app.post("/login", clientsController.login);
+app.post("/login", authController.login);
 
 app.listen(port, () => {
   console.log(`Server is running on: http://localhost:${port}`);
