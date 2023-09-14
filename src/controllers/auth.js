@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const login = async (request, response) => {
+  //fazer login é ter um token
   const { email, password } = request.body;
 
   try {
@@ -25,7 +26,7 @@ const login = async (request, response) => {
 
     const token = jwt.sign(
       { userId: user.rows[0].id },
-      "984y503984yerfiohberlfikerbfkljhb",
+      "SenhaParaGerarMeuToken",
       { expiresIn: "1h" }
     );
 

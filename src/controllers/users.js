@@ -1,16 +1,21 @@
 const database = require("../database");
 const bcrypt = require("bcrypt");
+const { getAddress, formatAddress } = require("../utils/adress");
 
 const create = async (request, response) => {
   try {
-    const { name, email, password, address } = request.body;
+    const { name, email, password, cep } = request.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const addressData = await getAddress(cep);
+
+    const addressFormated = formatAddress(addressData);
 
     const query =
       "INSERT INTO users (name, email, password, address) VALUES ($1, $2, $3, $4);";
 
-    const values = [name, email, hashedPassword, address];
+    const values = [name, email, hashedPassword, addressFormated];
 
     const queryResult = await database.query(query, values);
 
