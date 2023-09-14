@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const clientsController = require("./controllers/clients");
+const usersController = require("./controllers/users");
 const authController = require("./controllers/auth");
 
 const app = express();
@@ -13,11 +13,11 @@ app.use(express.json());
 /**
  * * User routes
  */
-app.post("/user", clientsController.create);
-app.get("/user", clientsController.read);
-app.get("/user/:id", clientsController.readById);
-app.put("/user/:id", clientsController.update);
-app.delete("/user/:id", clientsController.remove);
+app.post("/user", usersController.create);
+app.get("/user", usersController.read);
+app.get("/user/:id", usersController.readById);
+app.put("/user/:id", usersController.update);
+app.delete("/user/:id", usersController.remove);
 
 /**
  * * Login routes

@@ -1,4 +1,4 @@
-const pool = require("../database");
+const database = require("../database");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -6,7 +6,7 @@ const login = async (request, response) => {
   const { email, password } = request.body;
 
   try {
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+    const user = await database.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 

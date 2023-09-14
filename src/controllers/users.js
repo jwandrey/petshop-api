@@ -1,4 +1,4 @@
-const pool = require("../database");
+const database = require("../database");
 const bcrypt = require("bcrypt");
 
 const create = async (request, response) => {
@@ -12,20 +12,21 @@ const create = async (request, response) => {
 
     const values = [name, email, hashedPassword, address];
 
-    const queryResult = await pool.query(query, values);
+    const queryResult = await database.query(query, values);
 
-    return response
-      .status(201)
-      .send({ message: "Client created successfully" });
+    return response.status(201).send({ message: "User created successfully" });
   } catch (error) {
     console.error(error.message);
   }
 };
 
-const read = (request, response) => {
+const read = async (request, response) => {
   try {
-    const findedClient = database.clients;
-    return response.status(200).send(findedClient);
+    const query = "SELECT * FROM users;";
+
+    const findedClient = await database.query(query);
+
+    return response.status(200).send(findedClient["rows"]);
   } catch (error) {
     console.error(error.message);
   }
