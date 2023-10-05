@@ -1,11 +1,6 @@
-const { Pool } = require("pg");
+const config = require('../../knexfile');
+const knex = require('knex');
 
-const pool = new Pool({
-  user: "isadfrn",
-  host: "localhost",
-  database: "petshop_db",
-  password: "294wu46ufGnGiU",
-  port: 5432,
-});
+const connection = knex(config.development);
 
-module.exports = pool;
+module.exports = connection;

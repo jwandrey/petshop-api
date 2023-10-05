@@ -7,7 +7,6 @@ const getAddress = async (cep) => {
         );
 
         return response.data;
-
     } catch (error) {
       console.error(error.message);
     }

@@ -1,10 +1,10 @@
-const database = require("../database");
+const knex = require("../database");
 const bcrypt = require("bcrypt");
 const { getAddress, formatAddress } = require("../utils/adress");
 
 const create = async (request, response) => {
   try {
-    const { name, email, password, cep } = request.body;
+    const { name, email, password, cep, houseNumber } = request.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -12,14 +12,21 @@ const create = async (request, response) => {
 
     const addressFormated = formatAddress(addressData);
 
-    const query =
-      "INSERT INTO users (name, email, password, address) VALUES ($1, $2, $3, $4);";
+    const createdUser = await knex("users")
+      .insert({
+        name,
+        email,
+        password: hashedPassword,
+        address: addressFormated,
+        houseNumber
+      })
+      .returning(["id", "name", "email", "address"]);
 
-    const values = [name, email, hashedPassword, addressFormated];
-
-    const queryResult = await database.query(query, values);
-
-    return response.status(201).send({ message: "User created successfully" });
+    return response.status(201)
+            .send({ 
+              user: createdUser, 
+              message: "User created successfully" 
+            });
   } catch (error) {
     console.error(error.message);
   }
